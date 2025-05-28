@@ -34,13 +34,17 @@ def list_archive(server_id):
     if check.returncode != 0 or not check.stdout.strip():
         return jsonify(success=False, message=f'Contenedor {container} no existe'), 404
 
-    # Listamos dirs vs files
+    # Listamos dirs vs files, excluyendo "." y ".."
     cmd = [
         'sudo', 'docker', 'exec', container, 'sh', '-c',
         f'''
           cd "{path}" 2>/dev/null || exit 1
           for f in * .?*; do
             [ -e "$f" ] || continue
+            # Excluir "." y ".."
+            if [ "$f" = "." ] || [ "$f" = ".." ]; then
+              continue
+            fi
             if [ -d "$f" ]; then
               printf "dir:%s\\n" "$f"
             else
@@ -61,9 +65,6 @@ def list_archive(server_id):
         files.append({'name': name, 'type': kind})  # kind: "dir" o "file"
 
     return jsonify(success=True, path=path, files=files), 200
-
-
-
 
 
 
@@ -91,7 +92,11 @@ def file_content(server_id):
     if not file_path:
         return jsonify(success=False, message='No se proporcionó la ruta del fichero'), 400
 
-    # Ejecutar cat
+    # Si es .jar, no devolver contenido ni error, simplemente devolver contenido vacío
+    if file_path.lower().endswith('.jar'):
+        return jsonify(success=True, content=''), 200
+
+    # Ejecutar cat para leer el archivo
     result = subprocess.run(
         ['sudo', 'docker', 'exec', container, 'cat', file_path],
         capture_output=True, text=True
@@ -101,6 +106,8 @@ def file_content(server_id):
         return jsonify(success=False, message='No se pudo leer el fichero', error=result.stderr.strip()), 500
 
     return jsonify(success=True, content=result.stdout), 200
+
+
 
 
 

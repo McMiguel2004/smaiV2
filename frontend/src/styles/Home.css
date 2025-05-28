@@ -688,8 +688,8 @@
     (1 + var(--sceneHeight) / var(--sceneMaxWidth)) *
     (var(--sceneShrinkPoint) / var(--sceneMaxWidth))
   );
-  box-sizing: border-box;
-  position: relative;
+ /*  box-sizing: border-box;*/
+ position: relative;
   height: calc(1px * var(--sceneHeight));
   width: 100%;
   max-width: calc(1px * var(--sceneMaxWidth));

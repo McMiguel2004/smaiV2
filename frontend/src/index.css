@@ -1,7 +1,7 @@
 /* index.css */
 /* Reset básico - estos estilos se complementan con theme.css */
 * {
-  box-sizing: border-box;
+  box-sizing: 0;
   margin: 0;
   padding: 0;
 }

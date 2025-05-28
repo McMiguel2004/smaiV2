@@ -223,9 +223,9 @@ export const Servers = () => {
     <Fade in={pageLoaded}>
       <Box
         sx={{
-          minHeight: "calc(100vh - 64px)",
+          minHeight: "100vh",
           pt: "64px",
-          pb: 4,
+          pb: 0,
           backgroundImage: "url(/assets/images/servers/1.png)",
           backgroundSize: "cover",
           backgroundPosition: "center",

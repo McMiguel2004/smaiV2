@@ -17,7 +17,12 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  Alert,
+  Collapse,
+  IconButton,
 } from "@mui/material"
+import CloseIcon from "@mui/icons-material/Close"
+
 import { ServerStatus } from "../components/servers/ServerStatus"
 import { ServerStartupMonitor } from "../components/servers/ServerStartupMonitor"
 import { serverService } from "../services/serverService"
@@ -35,8 +40,17 @@ export function ServerAdmin() {
   const [server, setServer] = useState(state?.server || null)
   const [loading, setLoading] = useState(!server)
   const [tabIndex, setTabIndex] = useState(0)
+  const [showAlert, setShowAlert] = useState(true)
 
-  // Array con las secciones y sus componentes
+  // Ocultar alerta tras 1 minuto
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowAlert(false)
+    }, 60000) // 60 segundos
+
+    return () => clearTimeout(timer)
+  }, [])
+
   const sections = [
     { label: "🐳 Docker", component: <DockerView server={server} /> },
     { label: "⚙️ Configuración", component: <ServerSettings server={server} /> },
@@ -62,7 +76,6 @@ export function ServerAdmin() {
     backgroundPosition: "center",
   }
 
-  // Loading / Not found
   if (loading || !server) {
     return (
       <Box
@@ -72,7 +85,7 @@ export function ServerAdmin() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          pt: { xs: 10, sm: 8 },  // más espacio arriba en móvil
+          pt: { xs: 10, sm: 8 },
           pb: { xs: 6, sm: 8 },
         }}
       >
@@ -95,19 +108,19 @@ export function ServerAdmin() {
       sx={{
         ...bg,
         minHeight: "100vh",
-        pt: { xs: 10, sm: 8 },  // empujamos todo hacia abajo en móvil
+        pt: { xs: 10, sm: 8 },
         pb: { xs: 6, sm: 8 },
       }}
     >
       <Container
         maxWidth="md"
-        disableGutters={isXs}       // en móvil usamos todo el ancho
+        disableGutters={isXs}
         sx={{ px: { xs: 2, sm: 0 } }}
       >
         <Paper
           elevation={6}
           sx={{
-            mt: { xs: 4, sm: 4 },    // separarlo aún más de la navbar
+            mt: { xs: 4, sm: 4 },
             p: { xs: 2, sm: 3, md: 4 },
             backgroundColor: "#1e1e1e",
             border: "2px solid #4a4a4a",
@@ -126,6 +139,33 @@ export function ServerAdmin() {
           >
             Panel Avanzado: “{server.name}”
           </Typography>
+
+          {/* Alerta superior */}
+          <Collapse in={showAlert}>
+            <Alert
+              severity="info"
+              variant="filled"
+              sx={{
+                mb: 2,
+                backgroundColor: "#1976d2",
+                color: "white",
+                fontSize: { xs: "0.85rem", sm: "1rem" },
+              }}
+              action={
+                <IconButton
+                  aria-label="close"
+                  color="inherit"
+                  size="small"
+                  onClick={() => setShowAlert(false)}
+                >
+                  <CloseIcon fontSize="inherit" />
+                </IconButton>
+              }
+            >
+              Todas las siguientes funcionalidades funcionan únicamente si el servidor está activo.{" "}
+              <strong>Recomendamos reiniciar el servidor después de cada uso de una funcionalidad.</strong>
+            </Alert>
+          </Collapse>
 
           {isXs ? (
             <FormControl fullWidth sx={{ mb: 2 }}>

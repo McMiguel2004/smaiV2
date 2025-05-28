@@ -19,8 +19,8 @@
     position: absolute;
     width: 280px;
     padding: 0;
-    box-sizing: border-box;
-    z-index: 2;
+ /*  box-sizing: border-box;*/
+ z-index: 2;
     color: #e0e0e0;
     overflow-y: auto;
   }

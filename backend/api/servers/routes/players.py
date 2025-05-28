@@ -30,9 +30,9 @@ def list_players(server_id):
         )
 
         if active_result.returncode != 0:
-            raise Exception("No se pudo leer jugadores activos")
+            raise Exception("Lamentablemente esta función esta en desarrollo... Gracias por su paciencia!!!")
         if banned_result.returncode != 0:
-            raise Exception("No se pudo leer jugadores baneados")
+            raise Exception("Lamentablemente esta función esta en desarrollo... Gracias por su paciencia!!!")
 
         active_players = active_result.stdout.strip().splitlines()
         banned_players = banned_result.stdout.strip().splitlines()

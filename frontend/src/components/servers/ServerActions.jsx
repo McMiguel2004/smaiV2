@@ -26,6 +26,9 @@ export const ServerActions = ({
   const borderColor = serverBackgrounds[server.software]?.borderColor || "#4a4a4a"
   const iconColor = serverBackgrounds[server.software]?.iconColor || "#4CAF50"
 
+  // Aquí definimos cuándo mostrar el botón de subir mods
+  const canUploadMods = server.software === "Forge" || server.software === "Fabric"
+
   return (
     <>
       <Box display="flex" justifyContent="center" mt={2}>
@@ -124,26 +127,30 @@ export const ServerActions = ({
                     </Zoom>
                   </Tooltip>
                 </Grid>
-                <Grid item>
-                  <Tooltip title="Subir mod" arrow placement="top">
-                    <Zoom in={expanded} style={{ transitionDelay: "400ms" }}>
-                      <IconButton
-                        onClick={() => onUploadFile(server.id)}
-                        sx={{
-                          color: "#673AB7",
-                          backgroundColor: "rgba(103, 58, 183, 0.1)",
-                          "&:hover": {
-                            backgroundColor: "rgba(103, 58, 183, 0.2)",
-                            transform: "scale(1.1)",
-                          },
-                          transition: "all 0.2s ease",
-                        }}
-                      >
-                        <Upload />
-                      </IconButton>
-                    </Zoom>
-                  </Tooltip>
-                </Grid>
+
+                {/* Condición para mostrar el botón de subir mods */}
+                {canUploadMods && (
+                  <Grid item>
+                    <Tooltip title="Subir mod" arrow placement="top">
+                      <Zoom in={expanded} style={{ transitionDelay: "400ms" }}>
+                        <IconButton
+                          onClick={() => onUploadFile(server.id)}
+                          sx={{
+                            color: "#673AB7",
+                            backgroundColor: "rgba(103, 58, 183, 0.1)",
+                            "&:hover": {
+                              backgroundColor: "rgba(103, 58, 183, 0.2)",
+                              transform: "scale(1.1)",
+                            },
+                            transition: "all 0.2s ease",
+                          }}
+                        >
+                          <Upload />
+                        </IconButton>
+                      </Zoom>
+                    </Tooltip>
+                  </Grid>
+                )}
               </>
             ) : (
               <>

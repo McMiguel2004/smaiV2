@@ -43,11 +43,27 @@ export const DockerView = ({ server }) => {
       .finally(() => setLoading(false))
   }, [server.id, currentPath])
 
+  
   const handleClickItem = ({ name, type }) => {
     if (type === "dir") {
       const next = currentPath === "/" ? `/${name}` : `${currentPath}/${name}`
       setCurrentPath(next)
     } else {
+      const lowerName = name.toLowerCase()
+  
+      // Archivos que no deben abrir diálogo
+      const isBlockedFile =
+        lowerName.endsWith(".jar") ||
+        lowerName.endsWith(".png") ||
+        lowerName === ".rcon-cli.env" ||
+        lowerName === ".rcon-cli.yaml"
+  
+      if (isBlockedFile) {
+        setSelectedFile(null)
+        setFileContent("")
+        return
+      }
+  
       setSelectedFile(name)
       setContentLoading(true)
       setEditing(false)
@@ -58,6 +74,8 @@ export const DockerView = ({ server }) => {
         .finally(() => setContentLoading(false))
     }
   }
+  
+  
 
   const handleSave = () => {
     setSaveLoading(true)
