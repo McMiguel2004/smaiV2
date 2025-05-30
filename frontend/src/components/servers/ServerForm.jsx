@@ -19,7 +19,7 @@ import { Add, Close, Settings } from "@mui/icons-material"
 import { useState, useEffect } from "react"
 
 // Opciones de software
-const softwareOptions = ["Java", "Forge", "Fabric", "Spigot", "Bukkit", "Modpack"]
+const softwareOptions = ["Java", "Forge", "Fabric", "Modpack"]
 
 // Base de datos de versiones compatibles
 const versionDatabase = {
