@@ -7,7 +7,7 @@ export const useServerForm = () => {
     nombreServidor: "",
     software: "Java",
     modpack: "",
-    version: "1.20.6",
+    version: "latest",
     maxPlayers: 20,
     difficulty: "NORMAL",
     mode: "SURVIVAL",

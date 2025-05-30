@@ -16,9 +16,50 @@ import {
   Alert,
 } from "@mui/material"
 import { Add, Close, Settings } from "@mui/icons-material"
+import { useState, useEffect } from "react"
 
+// Opciones de software
 const softwareOptions = ["Java", "Forge", "Fabric", "Spigot", "Bukkit", "Modpack"]
-const versionOptions = ["1.20.6", "1.20.5", "1.20.4", "1.20.1", "1.19.4", "1.18.2", "1.16.5", "1.12.2", "1.8.9"]
+
+// Base de datos de versiones compatibles
+const versionDatabase = {
+  Java: [
+    { version: "1.20.6", java: "Java 21", imageTag: "java21" },
+    { version: "1.20.4", java: "Java 21", imageTag: "java21" },
+    { version: "1.19.4", java: "Java 17", imageTag: "java17" },
+    { version: "1.18.2", java: "Java 17", imageTag: "java17" },
+    { version: "1.16.5", java: "Java 8", imageTag: "java8" },
+    { version: "1.12.2", java: "Java 8", imageTag: "java8" }
+  ],
+  Forge: [
+    { version: "1.20.1", forgeVersion: "47.1.3", java: "Java 17", imageTag: "java17" },
+    { version: "1.19.4", forgeVersion: "43.2.0", java: "Java 17", imageTag: "java17" },
+    { version: "1.18.2", forgeVersion: "40.2.0", java: "Java 17", imageTag: "java17" },
+    { version: "1.16.5", forgeVersion: "36.2.39", java: "Java 8", imageTag: "java8" },
+    { version: "1.12.2", forgeVersion: "14.23.5.2860", java: "Java 8", imageTag: "java8" }
+  ],
+  Fabric: [
+    { version: "1.20.6", fabricApi: "0.15.7", java: "Java 21", imageTag: "java21" },
+    { version: "1.20.4", fabricApi: "0.14.21", java: "Java 21", imageTag: "java21" },
+    { version: "1.19.4", fabricApi: "0.14.22", java: "Java 17", imageTag: "java17" },
+    { version: "1.18.2", fabricApi: "0.13.3", java: "Java 17", imageTag: "java17" }
+  ],
+  Spigot: [
+    { version: "1.20.4", java: "Java 17", imageTag: "java17" },
+    { version: "1.19.4", java: "Java 17", imageTag: "java17" },
+    { version: "1.18.2", java: "Java 17", imageTag: "java17" },
+    { version: "1.16.5", java: "Java 8", imageTag: "java8" }
+  ],
+  Bukkit: [
+    { version: "1.20.4", java: "Java 17", imageTag: "java17" },
+    { version: "1.19.4", java: "Java 17", imageTag: "java17" },
+    { version: "1.16.5", java: "Java 8", imageTag: "java8" },
+    { version: "1.12.2", java: "Java 8", imageTag: "java8" }
+  ],
+  Modpack: [] // Las versiones se detectan automáticamente
+}
+
+// Opciones de configuración
 const difficultyOptions = [
   ["PEACEFUL", "Pacífico"],
   ["EASY", "Fácil"],
@@ -31,7 +72,6 @@ const modeOptions = [
   ["ADVENTURE", "Aventura"],
   ["SPECTATOR", "Espectador"],
 ]
-
 const switchOptions = [
   ["spawnNpcs", "Generar aldeanos"],
   ["allowNether", "Permitir Nether"],
@@ -78,12 +118,39 @@ const formStyles = {
 }
 
 export const ServerForm = ({ formData, showAdvanced, onChange, onToggleAdvanced, onSubmit, onCancel, formError }) => {
-  // Validate CurseForge URL
+  const [versionOptions, setVersionOptions] = useState([])
+  const [additionalInfo, setAdditionalInfo] = useState("")
+
+  // Actualizar versiones cuando cambia el software seleccionado
+  useEffect(() => {
+    if (formData.software && versionDatabase[formData.software]) {
+      const versions = versionDatabase[formData.software].map(item => item.version)
+      setVersionOptions(versions)
+     
+      // Resetear versión seleccionada al cambiar de software
+      if (!versions.includes(formData.version)) {
+        onChange({ target: { name: "version", value: versions[0] || "" } })
+      }
+     
+      // Mostrar información adicional para Forge/Fabric
+      if (formData.software === "Forge" || formData.software === "Fabric") {
+        const selected = versionDatabase[formData.software].find(v => v.version === formData.version) ||
+                        versionDatabase[formData.software][0]
+        setAdditionalInfo(
+          formData.software === "Forge"
+            ? `Forge ${selected.forgeVersion} (${selected.java})`
+            : `Fabric API ${selected.fabricApi} (${selected.java})`
+        )
+      } else {
+        setAdditionalInfo("")
+      }
+    }
+  }, [formData.software, formData.version])
+
+  // Validar URL de CurseForge
   const isValidCurseForgeUrl = (url) => {
-    if (!url) return true // Empty is valid (not required)
-    return /^https?:\/\/www\.curseforge\.com\/minecraft\/modpacks\/[^/]+(\/?|\/files\/\d+\/?|\/download\/\d+\/?)?$/.test(
-      url,
-    ) 
+    if (!url) return true
+    return /^https?:\/\/www\.curseforge\.com\/minecraft\/modpacks\/[^/]+(\/?|\/files\/\d+\/?|\/download\/\d+\/?)?$/.test(url)
   }
 
   const modpackUrlError = formData.software === "Modpack" && formData.modpack && !isValidCurseForgeUrl(formData.modpack)
@@ -117,7 +184,12 @@ export const ServerForm = ({ formData, showAdvanced, onChange, onToggleAdvanced,
         <Grid item xs={12} md={6}>
           <FormControl fullWidth margin="normal">
             <InputLabel sx={{ color: "#aaa" }}>Software</InputLabel>
-            <Select name="software" value={formData.software} onChange={onChange} sx={formStyles.input}>
+            <Select
+              name="software"
+              value={formData.software}
+              onChange={onChange}
+              sx={formStyles.input}
+            >
               {softwareOptions.map((s) => (
                 <MenuItem key={s} value={s} sx={{ backgroundColor: "#333" }}>
                   {s}
@@ -147,43 +219,58 @@ export const ServerForm = ({ formData, showAdvanced, onChange, onToggleAdvanced,
         </Grid>
 
         <Grid item xs={12} md={6}>
-          <FormControl fullWidth margin="normal">
-            <InputLabel sx={{ color: "#aaa" }}>Versión</InputLabel>
-            <Select
-              name="version"
-              value={formData.version}
-              onChange={onChange}
-              sx={formStyles.input}
-              disabled={formData.software === "Modpack"} // Disable version selection for modpacks
-            >
-              {versionOptions.map((v) => (
-                <MenuItem key={v} value={v} sx={{ backgroundColor: "#333" }}>
-                  {v}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          {formData.software === "Modpack" && (
-            <Typography variant="caption" sx={{ color: "#aaa", mt: 1, display: "block" }}>
+          {formData.software !== "Modpack" ? (
+            <FormControl fullWidth margin="normal">
+              <InputLabel sx={{ color: "#aaa" }}>Versión</InputLabel>
+              <Select
+                name="version"
+                value={formData.version}
+                onChange={onChange}
+                sx={formStyles.input}
+              >
+                {versionOptions.map((v) => (
+                  <MenuItem key={v} value={v} sx={{ backgroundColor: "#333" }}>
+                    {v}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          ) : (
+            <Typography variant="caption" sx={{ color: "#aaa", mt: 3, display: "block" }}>
               * La versión se determinará automáticamente según el modpack seleccionado
+            </Typography>
+          )}
+         
+          {additionalInfo && (
+            <Typography variant="caption" sx={{ color: "#4CAF50", mt: 1, display: "block" }}>
+              {additionalInfo}
             </Typography>
           )}
         </Grid>
       </Grid>
+      {formData.software !== "Modpack" && (
+      <>
+        <Box
+          mt={2}
+          onClick={onToggleAdvanced}
+          sx={{
+            cursor: "pointer",
+            color: "#4CAF50",
+            display: "flex",
+            alignItems: "center",
+            fontWeight: "bold",
+          }}
+        >
+          <Settings sx={{ mr: 1 }} /> Opciones avanzadas
+        </Box>
 
-      <Box
-        mt={2}
-        onClick={onToggleAdvanced}
-        sx={{
-          cursor: "pointer",
-          color: "#4CAF50",
-          display: "flex",
-          alignItems: "center",
-          fontWeight: "bold",
-        }}
-      >
-        <Settings sx={{ mr: 1 }} /> Opciones avanzadas
-      </Box>
+        <Collapse in={showAdvanced}>
+          <Box mt={2} p={2} sx={{ backgroundColor: "rgba(0,0,0,0.3)", borderRadius: 1 }}>
+            {/* … todo tu contenido de configuración avanzada … */}
+          </Box>
+        </Collapse>
+      </>
+    )}
 
       <Collapse in={showAdvanced}>
         <Box mt={2} p={2} sx={{ backgroundColor: "rgba(0,0,0,0.3)", borderRadius: 1 }}>

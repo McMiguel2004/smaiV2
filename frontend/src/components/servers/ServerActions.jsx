@@ -27,7 +27,7 @@ export const ServerActions = ({
   const iconColor = serverBackgrounds[server.software]?.iconColor || "#4CAF50"
 
   // Aquí definimos cuándo mostrar el botón de subir mods
-  const canUploadMods = server.software === "Forge" || server.software === "Fabric"
+  const canUploadMods = server.software === "Forge" || server.software === "Fabric" || server.software === "Modpack"
 
   return (
     <>
