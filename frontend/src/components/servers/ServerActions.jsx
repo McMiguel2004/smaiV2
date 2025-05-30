@@ -107,27 +107,28 @@ export const ServerActions = ({
                     </Zoom>
                   </Tooltip>
                 </Grid>
-                <Grid item>
-                  <Tooltip title="Terminal" arrow placement="top">
-                    <Zoom in={expanded} style={{ transitionDelay: "300ms" }}>
-                      <IconButton
-                        onClick={() => onShowLogs(server.id)}
-                        sx={{
-                          color: "#2196F3",
-                          backgroundColor: "rgba(33, 150, 243, 0.1)",
-                          "&:hover": {
-                            backgroundColor: "rgba(33, 150, 243, 0.2)",
-                            transform: "scale(1.1)",
-                          },
-                          transition: "all 0.2s ease",
-                        }}
-                      >
-                        <Terminal />
-                      </IconButton>
-                    </Zoom>
-                  </Tooltip>
-                </Grid>
-
+                {server.software !== "Modpack" && (
+                  <Grid item>
+                    <Tooltip title="Terminal" arrow placement="top">
+                      <Zoom in={expanded} style={{ transitionDelay: "300ms" }}>
+                        <IconButton
+                          onClick={() => onShowLogs(server.id)}
+                          sx={{
+                            color: "#2196F3",
+                            backgroundColor: "rgba(33, 150, 243, 0.1)",
+                            "&:hover": {
+                              backgroundColor: "rgba(33, 150, 243, 0.2)",
+                              transform: "scale(1.1)",
+                            },
+                            transition: "all 0.2s ease",
+                          }}
+                        >
+                          <Terminal />
+                        </IconButton>
+                      </Zoom>
+                    </Tooltip>
+                  </Grid>
+                )}
                 {/* Condición para mostrar el botón de subir mods */}
                 {canUploadMods && (
                   <Grid item>
