@@ -12,6 +12,6 @@ Para instalar todos los paquetes necesarios (Python, Node.js, dependencias, etc.
 🔗 [Repositorio Ansible (poner enlace aquí)](https://github.com/hammad2003/Scripts-Playbooks-V2)
 
 ```bash
-git clone https://github.com/tu-usuario/tu-repo-ansible.git
-cd tu-repo-ansible
-ansible-playbook instalar.yml
+git clone https://github.com/hammad2003/Scripts-Playbooks-V2.git
+cd Scripts-Playbooks-V2
+.runsh
