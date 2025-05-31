@@ -58,3 +58,11 @@ project-root/
 ├── README.md
 └── (otros archivos o carpetas que creas necesarios)
 ```
+
+---
+
+### ✅ Requisitos previos (si no usas Ansible)
+
+## Python 3:
+
+
