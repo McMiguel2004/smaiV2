@@ -15,6 +15,7 @@ Para instalar todos los paquetes necesarios (Python, Node.js, dependencias, etc.
 git clone https://github.com/hammad2003/Scripts-Playbooks-V2.git
 cd Scripts-Playbooks-V2
 ./run.sh
+```
 
 ---
 
