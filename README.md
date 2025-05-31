@@ -206,3 +206,14 @@ Para actualizar los paquetes del frontend, puedes usar:
 cd frontend
 npm update
 ```
+
+---
+
+## 🙏 Agradecimientos
+
+- Gracias a [**Hammad2003**](https://github.com/hammad2003) por su excelente trabajo en el repositorio de Ansible que utilizamos para la configuración automática:  
+  🔗 [Scripts-Playbooks-V2](https://github.com/hammad2003/Scripts-Playbooks-V2)
+
+- A todos los colaboradores y mantenedores de las dependencias de Flask/FastAPI y Vite/React (o Vue) que hacen posible este proyecto.
+
+
