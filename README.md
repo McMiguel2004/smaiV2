@@ -66,13 +66,26 @@ project-root/
 ###### Backend:
 
 Flask o FastAPI (según tu app.py).
-
 Otras librerías listadas en backend/requirements.txt.
 
 ###### Frontend:
 
 Vite, React o Vue (dependiendo de tu configuración).
-
 Cualquier librería adicional que aparezca en frontend/package.json.
 
+---
 
+
+### ✨ Notas finales
+Si encuentras errores durante la ejecución, revisa que todas las dependencias estén correctamente instaladas.
+
+Verifica las versiones de Python y Node.js recomendadas por el proyecto.
+
+Para actualizar los paquetes del frontend, puedes usar:
+
+```bash
+Copiar
+Editar
+cd frontend
+npm update
+```
