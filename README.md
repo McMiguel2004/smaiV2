@@ -84,8 +84,6 @@ Verifica las versiones de Python y Node.js recomendadas por el proyecto.
 Para actualizar los paquetes del frontend, puedes usar:
 
 ```bash
-Copiar
-Editar
 cd frontend
 npm update
 ```
