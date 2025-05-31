@@ -107,7 +107,6 @@ export const ServerActions = ({
                     </Zoom>
                   </Tooltip>
                 </Grid>
-                {server.software !== "Modpack" && (
                   <Grid item>
                     <Tooltip title="Terminal" arrow placement="top">
                       <Zoom in={expanded} style={{ transitionDelay: "300ms" }}>
@@ -128,7 +127,7 @@ export const ServerActions = ({
                       </Zoom>
                     </Tooltip>
                   </Grid>
-                )}
+                
                 {/* Condición para mostrar el botón de subir mods */}
                 {canUploadMods && (
                   <Grid item>
