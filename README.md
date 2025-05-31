@@ -15,3 +15,15 @@ Para instalar todos los paquetes necesarios (Python, Node.js, dependencias, etc.
 git clone https://github.com/hammad2003/Scripts-Playbooks-V2.git
 cd Scripts-Playbooks-V2
 ./run.sh
+
+---
+
+## 🚀 Cómo ejecutar el proyecto
+
+Una vez finalizada la instalación con Ansible, simplemente entra en las carpetas correspondientes y ejecuta los comandos para levantar cada parte del proyecto.
+
+### Backend (Python)
+
+```bash
+cd backend
+python3 app.py
