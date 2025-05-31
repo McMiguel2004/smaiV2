@@ -61,8 +61,18 @@ project-root/
 
 ---
 
-### ✅ Requisitos previos (si no usas Ansible)
+### 📦 Dependencias recomendadas
 
-## Python 3:
+Backend:
+
+Flask o FastAPI (según tu app.py)
+
+Otras librerías listadas en backend/requirements.txt
+
+Frontend:
+
+Vite, React o Vue (dependiendo de tu configuración)
+
+Cualquier librería adicional que aparezca en frontend/package.json
 
 
