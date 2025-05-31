@@ -1,4 +1,4 @@
-# Proyecto Full Stack con Ansible
+# Servidores de Minecraft. Automatizados. Increíbles.
 
 Este proyecto incluye un backend en Python y un frontend en JavaScript.  
 La instalación del entorno se realiza de forma automática utilizando **Ansible**, el cual se encuentra en un repositorio aparte.
