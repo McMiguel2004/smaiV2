@@ -335,7 +335,7 @@ npm run preview                  # Preview del build
 Este proyecto está bajo la Licencia MIT. Ver el archivo \`LICENSE\` para más detalles.
 
 ## 🙏 Agradecimientos
-
+- **[hammad2003](https://github.com/hammad2003)** por los scripts de automatización [Scripts-Playbooks-V2](https://github.com/hammad2003/Scripts-Playbooks-V2)
 - **Comunidad de Minecraft** por la inspiración
 - **itzg** por la excelente imagen Docker de Minecraft
 - **Comunidad Open Source** por las herramientas utilizadas
