@@ -28,3 +28,33 @@ Una vez finalizada la instalación con Ansible, simplemente entra en las carpeta
 ```bash
 cd backend
 python3 app.py
+```
+---
+
+###Frontend (Node.js)
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+---
+
+### 🧱 Estructura del proyecto
+
+```bash
+
+project-root/
+├── backend/
+│   ├── app.py
+│   ├── requirements.txt
+│   └── (otros archivos de configuración)
+├── frontend/
+│   ├── package.json
+│   ├── package-lock.json
+│   ├── src/
+│   └── (otros archivos del frontend)
+├── README.md
+└── (otros archivos o carpetas que creas necesarios)
+```
